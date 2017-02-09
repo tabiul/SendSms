@@ -2,12 +2,19 @@ package burstsms
 
 import (
 	"errors"
+	"github.com/tabiul/SendSms/burstsms/server"
+	"github.com/tabiul/SendSms/burstsms/test"
+	"os"
 	"testing"
-	"burstsms/test"
 )
 
 func TestShortenUrl(t *testing.T) {
-	bitly := NewBitly("tabiul@gmail.com", "P@ssw0rd07c", "b2748146283bd380ac1c9fb29fe8dc4fd23ee55a", "d13ecf81986d30bf67ff73e087eb3813e54b9ab2")
+	bitlyUsername := os.Getenv(server.BitlyUsername)
+	bitlyPassword := os.Getenv(server.BitlyPassword)
+	bitlyClientID := os.Getenv(server.BitlyClientID)
+	bitlyClientSecret := os.Getenv(server.BitlyClientSecret)
+
+	bitly := NewBitly(bitlyUsername, bitlyPassword, bitlyClientID, bitlyClientSecret)
 	url, err := bitly.ShortenURL("http://google.com")
 	if err != nil {
 		test.Fail(t, err)

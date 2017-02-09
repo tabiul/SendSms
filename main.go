@@ -1,15 +1,10 @@
 package main
 
 import (
-	"burstsms"
-	"com/burstsms/bitly"
-	"com/burstsms/rest"
-	"com/burstsms/sms"
 	"flag"
+	"github.com/tabiul/SendSms/burstsms/server"
 	"log"
-	"net/http"
 	"os"
-	"burstsms/server"
 )
 
 const (
@@ -21,16 +16,16 @@ var webAppDir string
 func init() {
 	log.SetFlags(log.Ltime)
 	log.SetPrefix(appName + ":")
-	flag.StringVar(&webAppDir, "webapp", "", "specify the path to webapp(required)")
+	flag.StringVar(&webAppDir, "webapp", "", "path to webapp(required)")
 }
 
 func main() {
 	flag.Parse()
 	if webAppDir == "" {
-		log.Fatal("webapp directory is required")
+		log.Fatal("Please specify the path to webapp")
 	}
 	if _, err := os.Stat(webAppDir); err != nil {
-		log.Fatalf("webapp directory %s is not valid", webAppDir)
+		log.Fatalf("Directory %s is not valid", webAppDir)
 	}
 
 	server.Run(webAppDir)

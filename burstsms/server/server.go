@@ -1,15 +1,54 @@
 package server
 
 import (
-	"burstsms"
+	"github.com/tabiul/SendSms/burstsms"
 	"log"
 	"net/http"
+	"os"
+)
+
+const (
+	// BitlyUsername is the username to connect to bitly
+	BitlyUsername        = "BITLY_USERNAME"
+	// BitlyPassword is the password to connect to bitly
+	BitlyPassword        = "BITLY_PASSWORD"
+	// BitlyClientID is the client ID of the application registered in bitly
+	BitlyClientID        = "BITLY_CLIENTID"
+	// BitlyClientSecret is the client secret of the application registered in bitly
+	BitlyClientSecret    = "BITLY_CLIENTSECRET"
+	// BurstSMSClientID is the client ID to connect to burstsms
+	BurstSMSClientID     = "BURSTSMS_CLIENTID"
+	// BurstSMSClientSecret is the client secret to connect to burst sms
+	BurstSMSClientSecret = "BURSTSMS_CLIENTSECRET"
 )
 
 // Run starts web server
 func Run(webAppDir string) {
-	bitly := burstsms.NewBitly("tabiul@gmail.com", "P@ssw0rd07c", "b2748146283bd380ac1c9fb29fe8dc4fd23ee55a", "d13ecf81986d30bf67ff73e087eb3813e54b9ab2")
-	sms := burstsms.NewSMS("cddd0f7a6282d6dddbe6a3fc465b6ec4", "secret", bitly)
+	bitlyUsername := os.Getenv(BitlyUsername)
+	if bitlyUsername == "" {
+		log.Fatalf("Environment variable %s is required", BitlyUsername)
+	}
+
+	bitlyPassword := os.Getenv(BitlyPassword)
+	if bitlyPassword == "" {
+		log.Fatalf("Environment variable %s is required", BitlyPassword)
+	}
+
+	burstSMSClientID := os.Getenv(BurstSMSClientID)
+	if burstSMSClientID == "" {
+		log.Fatalf("Environment variable %s is required", BurstSMSClientID)
+	}
+
+	burstSMSClientSecret := os.Getenv(BurstSMSClientSecret)
+	if burstSMSClientSecret == "" {
+		log.Fatalf("Environment variable %s is required", BurstSMSClientSecret)
+	}
+
+	bitlyClientID := os.Getenv(BitlyClientID)
+	bitlyClientSecret := os.Getenv(BitlyClientSecret)
+
+	bitly := burstsms.NewBitly(bitlyUsername, bitlyPassword, bitlyClientID, bitlyClientSecret)
+	sms := burstsms.NewSMS(burstSMSClientID, burstSMSClientSecret, bitly)
 	handler := burstsms.NewREST(sms)
 	http.HandleFunc("/sms/send", handler.SendSMS)
 	http.Handle("/", http.FileServer(http.Dir(webAppDir)))

@@ -12,10 +12,11 @@ import (
 )
 
 const (
-	sendSMSURL        = "https://api.transmitsms.com/send-sms.json"
+	sendSMSURL = "https://api.transmitsms.com/send-sms.json"
 	//InternalErrorCode a code to indicate internal error
 	InternalErrorCode = "InternalError"
 )
+
 // SuccessResponse contains details on successful sending of SMS
 type SuccessResponse struct {
 	MessageID   int64   `json:"message_id"`
