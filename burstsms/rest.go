@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	maxSMSSize = 160 * 3
+	maxSMSSize = 160 * 3 //maximum allowed message length as each SMS size is 160 and maximum 3 SMS is allowed
 )
 
 type request struct {

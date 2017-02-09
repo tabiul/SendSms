@@ -14,7 +14,6 @@ smsApp.controller('smsController', function ($scope, $http, $location) {
             $scope.errorMessage = "maximum message size is " + maxSize;
             return;
         }
-        if($scope.message)
         var data = {
             phoneNumber: $scope.phoneNumber,
             message: $scope.message
