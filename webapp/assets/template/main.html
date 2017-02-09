@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <form class="form-horizontal">
+        <div class="alert alert-danger" ng-if="errorMessage">
+            <a class="close" data-dismiss="alert">&times;</a>
+            <span>errorMessage</span>
+        </div>
+        <div ng-if="responses" ng-repeat="response in responses">
+            <div class="alert" ng-class="response.Success ? 'alert-success' : 'alert-danger'">
+                <a class="close" data-dismiss="alert">&times;</a>
+                <span>{{response.Message}}</span>
+            </div>
+        </div>
+        <h2>Send Sms</h2>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="phoneNumber">Phone Number</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="phoneNumber" required autofocus placeholder="phone number"
+                       ng-model="phoneNumber">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="message">Message</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" id="message" required ng-model="message" row="10" maxlength="{{maxSize}}"
+                          placeholder="type message here.."></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-primary" ng-click="sendSms()">Send</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
