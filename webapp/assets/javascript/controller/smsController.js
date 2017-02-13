@@ -18,7 +18,7 @@ smsApp.controller('smsController', function ($scope, $http, $location) {
             phoneNumber: $scope.phoneNumber,
             message: $scope.message
         };
-        var res = $http.post('http://localhost:8080/sms/send', angular.toJson(data));
+        var res = $http.post('sms/send', angular.toJson(data));
         res.success(function (data, status, headers, config) {
             if (status == 200) {
                 $scope.responses = data.responses;
